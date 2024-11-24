@@ -2,6 +2,6 @@
 <html>
 <body>
 
-   <c:out value="Hola, JSTL funciona correctamente!" />
+   <c:out value="Bienvenido, JSTL funciona correctamente!" />
 </body>
 </html>
