@@ -17,6 +17,7 @@
 </head>
 <body>
 <p>Descripcion: <c:out value="${articulo.descripcion }"></c:out></p>
+<p>Precio: $<c:out value="${articulo.precio}"></c:out></p>
 
 </body>
 </html>

@@ -1,0 +1,46 @@
+<%@page import="modelos.Articulo"%>
+<%@page import="repositories.interfaces.ArticuloRepo"%>
+<%@page import="repositories.ArticuloRepoSingleton"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%
+	ArticuloRepo repo = ArticuloRepoSingleton.getInstance();
+	Articulo art = repo.findById(2);
+	request.setAttribute("articulo", art);
+	
+%>    
+    
+    
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Editar</title>
+</head>
+<body>
+		<h1>Editar</h1>
+     
+   		<form action=" " method ="post">
+   				<p>
+   				    ID: <input value="${articulo.codigo}" name="codigo"/> 
+   				</p>
+   				<p>
+   				    Descripcion: <input value="${articulo.descripcion}" name="descripcion"/> 
+   				</p>
+   				<p>
+   				    Precio: $<input value="${articulo.precio}" name="precio"/> 
+   				</p>
+   				<p>
+   				    Stock: <input value="${articulo.stock}" name="stock"/> 
+   				</p>
+   				<input type="submit" value="Editar"/>		  				
+ 		
+   		</form>
+
+
+
+
+</body>
+</html>
