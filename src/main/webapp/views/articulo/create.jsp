@@ -9,10 +9,8 @@
 <body>
     <h1>Crear Articulo</h1>
      
-   		<form action=" " method ="post">
-   				<p>
-   				    ID: <input value="" name="codigo"/> 
-   				</p>
+   		<form action="articulo " method ="post">
+   				
    				<p>
    				    Descripcion: <input value="" name="descripcion"/> 
    				</p>

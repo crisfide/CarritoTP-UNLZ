@@ -11,7 +11,7 @@ public class Articulo {
 	
 
 	
-	public Articulo(int codigo, String descripcion, double precio, int stock) {
+	public Articulo(String descripcion, double precio, int stock) {
 		super();
 		this.codigo = codigo;
 		this.descripcion = descripcion;
