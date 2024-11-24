@@ -1,17 +1,11 @@
-<%@page import="modelos.Articulo"%>
-<%@page import="java.util.List"%>
-<%@page import="repositories.ArticuloRepoSingleton"%>
-<%@page import="repositories.interfaces.ArticuloRepo"%>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+  
+  <!--  ESTO DESPUES SE TIENE QUE SACAR -->
     
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%
-	ArticuloRepo repo= ArticuloRepoSingleton.getInstance();
-    List<Articulo> listaArticulos = repo.getAll();
-    
-    request.setAttribute("listin",listaArticulos);   
-%>       
+     
         
   
 <!DOCTYPE html>
@@ -21,6 +15,9 @@
 <title>Articulos</title>
 </head>
 <body>
+
+
+<a href= "articulo?accion-create">Agregar articulo</a>
 
 		<table border ="1">
 				<thead>
@@ -38,8 +35,8 @@
 					 		<td> <c:out value ="${articulo.descripcion}"/></td>
 					 		<td>$<c:out value ="${articulo.precio}"/> </td>
 					 		<td> <c:out value ="${articulo.stock}"/> </td>
-					 		<td><a href="www.google.com">ver</a></td>
-					 		<td><a href="www.google.com">editar</a></td>
+					 		<td><a href="articulo?accion=show&codigo=${articulo.codigo}">ver</a></td>
+					 		<td><a href="articulo?accion=edit&codigo=${articulo.codigo}">editar</a></td>
 					 		
 						</tr>
 						

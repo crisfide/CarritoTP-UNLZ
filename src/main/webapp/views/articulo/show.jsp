@@ -1,14 +1,7 @@
-<%@page import="repositories.interfaces.ArticuloRepo"%>
-<%@page import="modelos.Articulo"%>
-<%@page import="repositories.ArticuloRepoSingleton"%>
+
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%
-	ArticuloRepo repo = ArticuloRepoSingleton.getInstance();
-	Articulo art = repo.findById(2);
-	request.setAttribute("articulo", art);
-	
-%>
+
 <!DOCTYPE html>
 <html>
 <head>
