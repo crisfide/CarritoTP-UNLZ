@@ -17,20 +17,19 @@ import modelos.Articulo;
 import repositories.ArticuloRepoSingleton;
 import repositories.interfaces.ArticuloRepo;
 
-@WebServlet("/Articulos")
+@WebServlet("/articulo")
 public class ArticulosController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private ArticuloRepo articulosRepo;
        
-    public ArticulosController() {
+    public ArticulosController() {       
+    	super();        
+
        this.articulosRepo = ArticuloRepoSingleton.getInstance();
-    	//super();        
     }
     
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.sendError(400);
-	}
+
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -68,9 +67,8 @@ public class ArticulosController extends HttpServlet {
 		String sCodigo = request.getParameter("codigo");
 		int codigo = Integer.parseInt(sCodigo);
 		
-		ArticuloRepo repo = ArticuloRepoSingleton.getInstance();
 		
-		Articulo art = repo.findById(codigo);
+		Articulo art = this.articulosRepo.findById(codigo);
 		
 		request.setAttribute("articulo",art);
 		
@@ -86,7 +84,7 @@ public class ArticulosController extends HttpServlet {
 		
 		Articulo art = articulosRepo.findById(codigo);
 		
-		request.setAtribute("articulo",art);
+		request.setAttribute("articulo",art);
 			
 		
 		request.getRequestDispatcher("/views/articulo/show.jsp").forward(request, response);
@@ -95,9 +93,8 @@ public class ArticulosController extends HttpServlet {
 
 	private void getIndex(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		ArticuloRepo repo = ArticuloRepoSingleton.getInstance();
 		
-		List<Articulo> listArt = repo.getAll();
+		List<Articulo> listArt = this.articulosRepo.getAll();
 		
 		request.setAttribute("listin", listArt);
 		
@@ -111,7 +108,7 @@ public class ArticulosController extends HttpServlet {
 		
 		
 		String accion = request.getParameter("accion");
-		accion = Optional.ofNullable(accion).orElse("insert");
+		//accion = Optional.ofNullable(accion).orElse("insert");
 		
 		if(accion == null) {
 			response.sendError(400,"No se brindo una accion");
@@ -191,7 +188,7 @@ public class ArticulosController extends HttpServlet {
 		Articulo articulo = new Articulo(descripcion, precio, stock);
 		
 		
-		ArticuloRepo.insert(articulo);
+		this.articulosRepo.insert(articulo);
 		
 		
 		response.sendRedirect("articulo");

@@ -15,7 +15,8 @@
 <body>
 		<h1>Editar</h1>
      
-   		<form action=" " method ="post">
+   		<form action="articulo" method ="post">
+   				<input type="hidden" name="accion" value="update">
    				<p>
    				    ID: <input value="${articulo.codigo}" name="codigo"/> 
    				</p>

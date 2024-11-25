@@ -12,5 +12,11 @@
 <p>Descripcion: <c:out value="${articulo.descripcion }"></c:out></p>
 <p>Precio: $<c:out value="${articulo.precio}"></c:out></p>
 
+<form method="post" action="articulo">
+	<input type="hidden" name="accion" value="delete"> 
+	<input type="hidden" name="codigo" value="${articulo.codigo }"> 
+	<input type="submit" value="Eliminar"> 
+</form>
+
 </body>
 </html>

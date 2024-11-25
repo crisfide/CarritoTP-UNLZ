@@ -17,9 +17,9 @@
 <body>
 
 
-<a href= "articulo?accion-create">Agregar articulo</a>
+<a href= "articulo?accion=create">Agregar articulo</a>
 
-		<table border ="1">
+		<table border ="1" style="border-collapse:collapse">
 				<thead>
 					<tr>
 					<th>Codigo</th>
