@@ -13,6 +13,7 @@ import javax.sql.rowset.serial.SerialException;
 
 import com.oracle.wls.shaded.org.apache.regexp.RE;
 
+import factory.RepoFactory;
 import modelos.Articulo;
 import repositories.ArticuloRepoSingleton;
 import repositories.interfaces.ArticuloRepo;
@@ -24,12 +25,12 @@ public class ArticulosController extends HttpServlet {
 	private ArticuloRepo articulosRepo;
        
     public ArticulosController() {       
-    	super();        
-
-       this.articulosRepo = ArticuloRepoSingleton.getInstance();
+    	   
+       RepoFactory factory = new RepoFactory();
+       this.articulosRepo = factory.getArticuloRepo();
     }
     
-
+    //DO-GET
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -47,7 +48,6 @@ public class ArticulosController extends HttpServlet {
 			default -> response.sendError(404);
 		}
 	}
-
 
 	private void getBienvenido(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -104,6 +104,9 @@ public class ArticulosController extends HttpServlet {
 
 	}
 	
+	
+	//DO-POST
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		
@@ -139,9 +142,7 @@ public class ArticulosController extends HttpServlet {
 		
 		
 	}
-	
-	
-	
+		
 	private void postUpdate(HttpServletRequest request, HttpServletResponse response)  throws IOException {
 		
 		String sCodigo = request.getParameter("codigo");
@@ -170,10 +171,7 @@ public class ArticulosController extends HttpServlet {
 		
 		
 	}
-	
-	
-	
-	
+		
 	private void postInsert(HttpServletRequest request, HttpServletResponse response)  throws IOException {
 		
 		
