@@ -7,24 +7,26 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Login</title>
 </head>
 <body>
 
+<h1>Iniciar Sesión</h1>
 
-<form action="auth" method="post">
-<p>
-    Usuario:
-	<select>
-	 <c:forEach var="usuario" items="${usuarios}">
-	 	<option value="${usuario.nombre}"> ${usuario.nombre} </option>
-	 </c:forEach>
-	</select>
-</p>	
-
- <input type="submit" value="identificarse"/>
- 	
-</form>
+	<form action="auth" method="post">
+	               
+			 		<p>
+		   				  Usuario: 
+		   				 <input type="text" name="usuario" required> 
+		   			</p>
+		   			<p>
+		   			  	     Contraseña:
+		   				     <input type="password" name="contraseña"  required> 
+		   			</p>	
+		   			
+		      <input type="submit" value="Iniciar"/>
+	 	
+	</form>
 
 </body>
 </html>

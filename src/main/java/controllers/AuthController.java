@@ -8,13 +8,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import factory.RepoFactory;
 import modelos.Usuario;
 import repositories.interfaces.UsuarioRepo;
 
 
-@WebServlet("/AuthController")
+@WebServlet("/auth")
 public class AuthController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -28,21 +29,43 @@ public class AuthController extends HttpServlet {
     	    
     }
 
-	
+	//DO-GET
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		List<Usuario> usuarios = usuariosRepo.getAll();
+		//List<Usuario> usuarios = usuariosRepo.getAll();
 		
-		request.setAttribute("usuarios",usuarios);
+		//request.setAttribute("usuarios",usuarios);
 		
 		request.getRequestDispatcher("/views/auth/login.jsp").forward(request, response);
 	}
 
-	
+	//DO-POST
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		doGet(request, response);
+		String usuario = request.getParameter("usuario");
+		String contraseña = request.getParameter("contraseña");
+		
+		Usuario usu = usuariosRepo.findByNombre(usuario);
+		
+		if(usu != null && usu.getContraseña().equals(contraseña)) {
+			
+			HttpSession session = request.getSession();
+			
+			session.setAttribute("usuario", usu);
+			
+			response.sendRedirect("articulo");
+			
+		} else {
+			
+			request.setAttribute("error","No es por ahi");
+			request.getRequestDispatcher("/views/auth/login.jsp").forward(request, response);
+		}
+		
+		
+		
 	}
+	
+	
 
 }
