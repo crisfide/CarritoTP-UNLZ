@@ -4,13 +4,13 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Crear Articulo</title>
 </head>
 <body>
     <h1>Crear Articulo</h1>
      
    		<form action="articulo " method ="post">
-   				
+   				<input value="insert" name="accion" type="hidden"/>
    				<p>
    				    Descripcion: <input value="" name="descripcion"/> 
    				</p>

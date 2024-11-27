@@ -1,7 +1,9 @@
 package factory;
 import repositories.ArticuloRepoSingleton;
+import repositories.CarritoRepoSingleton;
 import repositories.UsuarioRepoSingleton;
 import repositories.interfaces.ArticuloRepo;
+import repositories.interfaces.CarritoRepo;
 import repositories.interfaces.UsuarioRepo;
 
 public class RepoFactory {
@@ -13,6 +15,10 @@ public class RepoFactory {
     public UsuarioRepo getUsuarioRepo(){
 		
 		return UsuarioRepoSingleton.getInstance();
+	}
+    public CarritoRepo getCarrito(){
+		
+		return CarritoRepoSingleton.getInstance();
 	}
 	
 

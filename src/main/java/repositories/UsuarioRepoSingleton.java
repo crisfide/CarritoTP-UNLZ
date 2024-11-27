@@ -3,7 +3,7 @@ package repositories;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import modelos.Articulo;
 import modelos.Usuario;
 import repositories.interfaces.UsuarioRepo;
 
@@ -24,8 +24,8 @@ public class UsuarioRepoSingleton implements UsuarioRepo {
 	private UsuarioRepoSingleton() {
 		this.listaUsuarios = new ArrayList<>();
 			 
-		this.insert(new Usuario("Carlos", "1234","Empleado",1));
-        this.insert(new Usuario("Manuel", "1234","Cliente",2));
+		this.insert(new Usuario("Carlos", "1234","Empleado"));
+        this.insert(new Usuario("Manuel", "1234","Cliente"));
 	
 	}
 		
@@ -34,8 +34,14 @@ public class UsuarioRepoSingleton implements UsuarioRepo {
 	}
 	
  	public void insert(Usuario usu) {
-		listaUsuarios.add(usu);		
+		int ultimaId = listaUsuarios.stream()
+				.map(Usuario::getId)
+				.max(Integer::compare)
+				.orElse(0);		
+
+		usu.setId(ultimaId + 1);
 		
+		listaUsuarios.add(usu);			
 	}
 
 	@Override
@@ -48,9 +54,10 @@ public class UsuarioRepoSingleton implements UsuarioRepo {
 	@Override
 	public Usuario findByNombre(String nombre) {
 		return this.listaUsuarios.stream()
-				.filter(e-> e.getNombre()== nombre)
-				.findFirst()
-				.orElse(null);
+		        .filter(e -> e.getNombre().equalsIgnoreCase(nombre))
+		        .findFirst()
+		        .orElse(null);
+
 	
 	}
 	

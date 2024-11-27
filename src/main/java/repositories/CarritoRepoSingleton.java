@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import factory.RepoFactory;
 import modelos.Articulo;
 import modelos.ElementoCarrito;
 import repositories.interfaces.ArticuloRepo;
@@ -25,6 +26,14 @@ public class CarritoRepoSingleton implements CarritoRepo {
 	
 	private CarritoRepoSingleton() {
         this.lista= new ArrayList<>();
+        
+        try {
+        	RepoFactory rf = new RepoFactory();
+			this.agregar(rf.getArticuloRepo().findById(1), 10);
+			this.agregar(rf.getArticuloRepo().findById(2), 20);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -35,7 +44,10 @@ public class CarritoRepoSingleton implements CarritoRepo {
 
 
 	@Override
-	public void agregar(Articulo art, int cantidad) {
+	public void agregar(Articulo art, int cantidad) throws Exception {
+		if(cantidad<=0) {
+			throw new Exception("Error: La cantidad debe ser mayor a 0.");
+		}
 		ElementoCarrito existente = this.lista.stream()
 				.filter(e -> e.getArticulo().getCodigo() == art.getCodigo())
 				.findFirst() // solo hay uno
@@ -57,19 +69,19 @@ public class CarritoRepoSingleton implements CarritoRepo {
 			    .filter(e -> e.getArticulo().getCodigo() == art.getCodigo())
 			    .findFirst();
 
-			if (optionalExistente.isPresent()) {
-			    ElementoCarrito existente = optionalExistente.get();
+		if (optionalExistente.isPresent()) {
+		    ElementoCarrito existente = optionalExistente.get();
 
-			    if (existente.getCantidad() == 1) {
-			        this.lista.remove(existente);
-			    } else if (existente.getCantidad() > cantidad) {
-			        existente.setCantidad(existente.getCantidad() - cantidad);
-			    } else {
-			        throw new Exception("Error: No se puede reducir más allá de la cantidad actual.");
-			    }
-			} else {
-				throw new Exception("Error: El artículo no está en el carrito.");
-			}
+		    if (existente.getCantidad() == 1) {
+		        this.lista.remove(existente);
+		    } else if (existente.getCantidad() > cantidad) {
+		        existente.setCantidad(existente.getCantidad() - cantidad);
+		    } else {
+		        throw new Exception("Error: No se puede reducir más allá de la cantidad actual.");
+		    }
+		} else {
+			throw new Exception("Error: El artículo no está en el carrito.");
+		}
 
 	}
 	
