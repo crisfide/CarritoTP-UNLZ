@@ -27,7 +27,10 @@
 </head>
 <body>
 
- <h1>Hola <c:out value="${sessionScope.usuario.nombre}" default="Desconocido"></c:out></h1>
+ <h1>Hola <c:out value="${sessionScope.usuario.nombre}" default="Desconocido"></c:out>
+ 
+ <a href="Crear">Gestor proyectos</a>
+ </h1>
 
 	<c:if test="${sessionScope.usuario.rol eq 'Empleado'}">
 	    <a href="articulo?accion=create">Agregar artículo</a>

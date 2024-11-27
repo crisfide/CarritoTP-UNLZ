@@ -30,9 +30,9 @@ public class SessionDecorator {
 	}
 	
 	
-	public ProyectoBuilder getProyecto() throws ArticuloDeslogueadoException {
+	public ProyectoBuilder getProyecto() {
 		
-		Articulo artLog = this.getArticuloLogueado();
+	
 		
 		ProyectoBuilder proyecto = (ProyectoBuilder) session.getAttribute(PROYECTO);
 		
@@ -40,7 +40,7 @@ public class SessionDecorator {
 			proyecto = Optional.ofNullable(proyecto).orElseThrow();
 
 		}catch (NoSuchElementException e) {
-			proyecto = new ProyectoBuilder(artLog);
+			proyecto = new ProyectoBuilder();
 			session.setAttribute("articulo", proyecto);
 		}
 		

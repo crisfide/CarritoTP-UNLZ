@@ -14,17 +14,67 @@
 
 <p>
 	Articulo:  
-	<c:out value="${proyecto.lider.descripcion}" />
+	<c:out value="${logueado.descripcion}" />
 	</p>
 
 <p>
 	Presupuesto: $ 
 	<c:out value="${proyecto.presupuesto }" />
+	
+		<table border="1">
+			<thead>
+				<tr>
+					<th>Descripcion</th>
+					<th>Tarea</th>
+					<th>Precio</th>
+									
+				</tr>
+			</thead>
+			 <tbody>
+					<c:forEach var="tupla" items="${proyecto.tuplas}">
+						<tr>
+							<td>${tupla.articulo.descripcion}</td>
+							<td>${tupla.tarea}</td>
+							<td>$${tupla.articulo.precio}</td>
+							
+						</tr>
+					</c:forEach>
+					
+					<tr> 
+						<td colspan="2">Total </td>
+							
+							<td>$${proyecto.total}</td>
+					
+					</tr>
+					
+					
+			</tbody>
+			
+		
+		</table>
+		
+		
+		<c:if test="${proyecto.presupuesto < proyecto.total}">
+			<c:out value="El proyecto se fue (NO HAY PLATA)"/>
+		
+		</c:if>
+	
+	
 	</p>
 	
 	
 	
-	
+	<h3>Agregar articulo</h3>
+	<form action="Crear" method="post"> 			
+			<input type="hidden" value="agregarart" name="accion">
+				<select name="articulo">
+					<c:forEach var="articulo" items="%{articulos }">
+						<option value="${articulo.codigo }"> ${articulo.descripcion} - ${articulo.stock } </option>
+				
+					</c:forEach>
+				</select>
+			<input name="tarea" />
+			<input type="submit"></form>
 	
 	
 	<h3>Cambiar presupuesto</h3>

@@ -16,7 +16,7 @@
 <p>Stock: ${articulo.stock}  </p>
 
 
-<a href="articulos"> Volver al indice </a>
+<a href="articulo"> Volver al indice </a>
 
 
 </body>

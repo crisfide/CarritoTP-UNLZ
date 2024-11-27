@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 
+import com.oracle.wls.shaded.org.apache.bcel.generic.RET;
 import com.oracle.wls.shaded.org.apache.regexp.recompile;
 
 import decorators.SessionDecorator;
@@ -61,13 +63,16 @@ public class CreacionProyectoController extends HttpServlet {
 		
 		ProyectoBuilder proyecto = sessionDec.getProyecto();
 		
-		proyecto.setLider(articuloActualizado);
+	//	proyecto.setLider(articuloActualizado);
 		
 		
-		session.setAttribute("proyecto", proyecto);
+	//	session.setAttribute("proyecto", proyecto);
+		
+		List<Articulo> articulos =articulosRepo.getAll();
 		
 		request.setAttribute("proyecto", proyecto);
-		
+		request.setAttribute("logueado", articuloActualizado1);
+		request.setAttribute("articulos", articulos);
 		
 		request.getRequestDispatcher("/views/creacion-proyecto/index.jsp").forward(request, response);
 		
@@ -86,8 +91,10 @@ public class CreacionProyectoController extends HttpServlet {
 		
 			try {
 				switch (accion) {
-					case "modifpre"-> doModificarPresupuesto(request,response);
-			
+					case "modifpre"-> postModificarPresupuesto(request,response);
+					case "agegarart"-> postAgregarArticulo(request,response);
+					
+					
 					default -> response.sendError(404);
 				}	
 	
@@ -99,7 +106,26 @@ public class CreacionProyectoController extends HttpServlet {
 
 	}
 
-	private void doModificarPresupuesto(HttpServletRequest request, HttpServletResponse response) throws IOException, ArticuloDeslogueadoException {
+	private void postAgregarArticulo(HttpServletRequest request, HttpServletResponse response) throws IOException  {
+
+		String sArticuloCod = request.getParameter("articulo");
+		int articuloCod = Integer.parseInt(sArticuloCod);
+		String tarea = request.getParameter("tarea");
+		
+		SessionDecorator sDec = new SessionDecorator(request.getSession());
+		
+		ProyectoBuilder proyecto = sDec.getProyecto();
+		
+		Articulo arti = articulosRepo.findById(articuloCod);
+		
+		proyecto.agregarTupla(arti, tarea);
+		
+		response.sendRedirect("crear");
+		
+	}
+
+
+	private void postModificarPresupuesto(HttpServletRequest request, HttpServletResponse response) throws IOException, ArticuloDeslogueadoException {
 				
 		HttpSession session = request.getSession();
 		

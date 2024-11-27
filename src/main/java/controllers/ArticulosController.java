@@ -183,7 +183,7 @@ public class ArticulosController extends HttpServlet {
 		
 	}
 		
-	private void postInsert(HttpServletRequest request, HttpServletResponse response)  throws IOException {
+	private void postInsert(HttpServletRequest request, HttpServletResponse response)  throws IOException, ServletException {
 		
 		
 		String descripcion = request.getParameter("descripcion");
@@ -200,9 +200,12 @@ public class ArticulosController extends HttpServlet {
 		this.articulosRepo.insert(articulo);
 		
 		
-		response.sendRedirect("articulo");
+		//response.sendRedirect("articulo");
+		
+		request.setAttribute("articulo", articulo);
 		
 		
+		request.getRequestDispatcher("/view/articulo/creado.jsp").forward(request, response);
 		
 	}
 
