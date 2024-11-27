@@ -9,7 +9,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
+import com.oracle.wls.shaded.org.apache.regexp.recompile;
+
+import decorators.SessionDecorator;
+import exeptions.ArticuloDeslogueadoException;
 import factory.RepoFactory;
 import modelos.Articulo;
 import repositories.interfaces.ArticuloRepo;
@@ -25,6 +30,9 @@ public class CreacionProyectoController extends HttpServlet {
        
 	
 	private UsuarioRepo usuariosRepo;
+
+
+	private ArticuloRepo articulosRepo;
        
     
     public CreacionProyectoController() {
@@ -38,31 +46,22 @@ public class CreacionProyectoController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 
-		
 		HttpSession session = request.getSession();
 		
-		
-		Articulo articuloLogNullable = (Articulo) session.getAttribute("articulo");
-		
-		Articulo articuloLog = Optional.ofNullable(articuloLogNullable).orElseThrow(()-> new IOException("No hay articulo"));
+		SessionDecorator sessionDec = new SessionDecorator(session); 
 		
 		
-		Articulo articuloActualizado = ArticuloRepo.findById(articuloLog.getCodigo());
+		Articulo articuloActualizado ;
+	try {
 		
-		ProyectoBuilder proyecto = (ProyectoBuilder) session.getAttribute("proyecto");
-		
-		
-		
+		Articulo articuloActualizado1 = sessionDec.getArticuloLogueadoActu(articulosRepo);
 		
 		
- 		
-	//	proyecto = Optional.ofNullable(proyecto).orElse(new ProyectoBuilder(articuloLog));
+	
 		
-		proyecto = Optional.ofNullable(proyecto).orElseGet(()->{
-			ProyectoBuilder pro = new ProyectoBuilder(articuloActualizado);
-			session.setAttribute("proyecto", pro);
-			return pro;
-		});
+		ProyectoBuilder proyecto = sessionDec.getProyecto();
+		
+		proyecto.setLider(articuloActualizado);
 		
 		
 		session.setAttribute("proyecto", proyecto);
@@ -71,47 +70,51 @@ public class CreacionProyectoController extends HttpServlet {
 		
 		
 		request.getRequestDispatcher("/views/creacion-proyecto/index.jsp").forward(request, response);
+		
+	} catch (ArticuloDeslogueadoException e) {
+			response.sendRedirect("auth");
+			return;
+		}
 	}
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String accion = request.getParameter("accion");
 		
-		switch (accion) {
-		case "modifpre"-> doModificarPresupuesto(request,response);
+	
+			String accion = request.getParameter("accion");
+		
+			try {
+				switch (accion) {
+					case "modifpre"-> doModificarPresupuesto(request,response);
 			
-		default -> response.sendError(404);
-		}
-		
+					default -> response.sendError(404);
+				}	
+	
+			}catch (ArticuloDeslogueadoException e) {
+				response.sendRedirect("auth");
+			}
+			
 		
 
 	}
 
-	private Object doModificarPresupuesto(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	private void doModificarPresupuesto(HttpServletRequest request, HttpServletResponse response) throws IOException, ArticuloDeslogueadoException {
 				
 		HttpSession session = request.getSession();
-		ProyectoBuilder proyecto = (ProyectoBuilder) session.getAttribute("proyecto");
 		
-
-		Articulo articuloLogNullable = (Articulo) session.getAttribute("articulo");
+		SessionDecorator sessionDec = new SessionDecorator(session); 
 		
-		Articulo articuloLog = Optional.ofNullable(articuloLogNullable).orElseThrow(()-> new IOException("No hay articulo"));
-		
-			
-		return proyecto = Optional.ofNullable(proyecto).orElseGet(()->{
-			ProyectoBuilder pro = new ProyectoBuilder(articuloLog);
-			session.setAttribute("proyecto", pro);
-			return pro;
-		});
-		
+		ProyectoBuilder proyecto = sessionDec.getProyecto();
+				
 		String sImporte = request.getParameter("importe");
+		
 		double importe = Double.parseDouble(sImporte);
 		
 		proyecto.setPresupuesto(serialVersionUID);
 		
-		
 		response.sendRedirect("crear");
+		//return importe;
 		
 	}
 
