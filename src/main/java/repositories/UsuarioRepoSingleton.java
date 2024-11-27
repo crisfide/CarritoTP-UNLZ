@@ -51,6 +51,7 @@ public class UsuarioRepoSingleton implements UsuarioRepo {
 		           .findFirst()
 		           .orElse(null);		
 	}
+	
 	@Override
 	public Usuario findByNombre(String nombre) {
 		return this.listaUsuarios.stream()

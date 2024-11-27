@@ -1,4 +1,5 @@
 /controllers/
-/utils/
 /decorators/
 /exeptions/
+/utils/
+/repositories/

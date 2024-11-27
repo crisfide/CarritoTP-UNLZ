@@ -11,22 +11,20 @@
 </head>
 <body>
 
-<h1>Iniciar Sesión</h1>
-	
 
-<form action="auth" method="post" style="max-width: 300px; margin: auto; font-family: Arial, sans-serif; border: 1px solid #ccc; padding: 20px; border-radius: 8px;">
+<form action="auth" method="post" style="max-width: 300px; margin: auto; font-family: Arial, sans-serif; border: 1px solid #ccc; padding: 20px 20px 40px; border-radius: 8px;">
     <h2 style="text-align: center;">Iniciar Sesión</h2>
 
     <div style="margin-bottom: 15px;">
         <label for="usuario" style="display: block; font-weight: bold; margin-bottom: 5px;">Usuario:</label>
         <input type="text" id="usuario" name="usuario" required 
-               style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+               style="width: 90%; padding: 10px;  border: 1px solid #ccc; border-radius: 4px; ">
     </div>
 
     <div style="margin-bottom: 15px;">
         <label for="contraseña" style="display: block; font-weight: bold; margin-bottom: 5px;">Contraseña:</label>
         <input type="password" id="contraseña" name="contraseña" required 
-               style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+               style="width: 90%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
     </div>
 
     <div style="text-align: center;">

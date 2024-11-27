@@ -59,11 +59,19 @@ public class AuthController extends HttpServlet {
 			
 			session.setAttribute("usuario", usu);
 			
+			if(usu.getRol().equals("Empleado")) {
+				
 			response.sendRedirect("articulo");
+			
+			} else {
+				
+			response.sendRedirect("carrito");
+			}
+				
 			
 		} else {
 			
-			request.setAttribute("error","No es por ahi");
+			request.setAttribute("error","Verifique Usuario y Contraseña");
 			request.getRequestDispatcher("/views/auth/login.jsp").forward(request, response);
 		}
 		
