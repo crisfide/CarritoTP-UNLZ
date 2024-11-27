@@ -16,7 +16,7 @@
 </head>
 <body>
 
- <h1>Hola <c:out value="${sessionScope.usuario.nombre}" default="Quien so"></c:out></h1>
+ <h1>Hola <c:out value="${sessionScope.usuario.nombre}" default="Desconocido"></c:out></h1>
 
 
 <a href= "articulo?accion=create">Agregar articulo</a>
