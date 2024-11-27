@@ -43,10 +43,10 @@ public class AuthController extends HttpServlet {
 	//DO-POST
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String usuario = request.getParameter("usuario");
+		String nombre = request.getParameter("usuario");
 		String contraseña = request.getParameter("contraseña");
 		
-		Usuario usu = usuariosRepo.findByNombre(usuario);
+		Usuario usu = usuariosRepo.findByNombre(nombre);
 		
 		if(usu != null && usu.getContraseña().equals(contraseña)) {
 			

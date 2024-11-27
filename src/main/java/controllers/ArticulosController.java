@@ -9,12 +9,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.rowset.serial.SerialException;
+import javax.websocket.Session;
 
 import com.oracle.wls.shaded.org.apache.regexp.RE;
 
 import factory.RepoFactory;
 import modelos.Articulo;
+import modelos.Usuario;
 import repositories.ArticuloRepoSingleton;
 import repositories.interfaces.ArticuloRepo;
 
@@ -109,6 +112,14 @@ public class ArticulosController extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		HttpSession session = request.getSession();
+		Usuario u = (Usuario) session.getAttribute("usuario");
+		
+
+		if( u ==null || !u.getRol().equals("Empleado")) {
+			response.sendError(401,"No autorizado");
+			return;
+		}
 		
 		String accion = request.getParameter("accion");
 		//accion = Optional.ofNullable(accion).orElse("insert");

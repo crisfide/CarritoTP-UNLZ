@@ -8,12 +8,11 @@ public class Usuario {
 		
 	
 	
-	public Usuario(String nombre, String contraseña, String rol, int id) {
+	public Usuario(String nombre, String contraseña, String rol) {
 		super();
 		this.nombre = nombre;
 		this.contraseña = contraseña;
 		this.rol = rol;
-		this.id = id;
 	}
 	
 
