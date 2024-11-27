@@ -40,8 +40,8 @@ public class SessionDecorator {
 			proyecto = Optional.ofNullable(proyecto).orElseThrow();
 
 		}catch (NoSuchElementException e) {
-			ProyectoBuilder pro = new ProyectoBuilder(artLog);
-			session.setAttribute("articulo", pro);
+			proyecto = new ProyectoBuilder(artLog);
+			session.setAttribute("articulo", proyecto);
 		}
 		
 										
