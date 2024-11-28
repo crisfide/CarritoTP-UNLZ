@@ -23,6 +23,9 @@
 
 	<h1>Hola <c:out value="${sessionScope.usuario.nombre}" default="Desconocido"></c:out></h1>
 	<h2>Carrito de compras</h2>
+	
+	<a href="articulo">Ver lista de articulos</a>
+	<br>
 
 	<table border ="1" style="border-collapse:collapse">
 		<thead>

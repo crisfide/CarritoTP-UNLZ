@@ -37,6 +37,13 @@ public class ArticulosController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		HttpSession session = request.getSession();
+		Usuario u = (Usuario) session.getAttribute("usuario");	
+		if( u ==null ) {
+			response.sendError(401,"No autorizado");
+			return;
+		}
+		
 		String accion = request.getParameter("accion");
 		accion = Optional.ofNullable(accion).orElse("index");
 		

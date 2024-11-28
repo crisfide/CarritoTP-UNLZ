@@ -61,11 +61,11 @@ public class AuthController extends HttpServlet {
 			
 			if(usu.getRol().equals("Empleado")) {
 				
-			response.sendRedirect("articulo");
+				response.sendRedirect("articulo");
 			
 			} else {
 				
-			response.sendRedirect("carrito");
+				response.sendRedirect("carrito");
 			}
 				
 			

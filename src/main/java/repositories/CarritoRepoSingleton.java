@@ -29,8 +29,8 @@ public class CarritoRepoSingleton implements CarritoRepo {
         
         try {
         	RepoFactory rf = new RepoFactory();
-			this.agregar(rf.getArticuloRepo().findById(1), 10);
-			this.agregar(rf.getArticuloRepo().findById(2), 20);
+			//this.agregar(rf.getArticuloRepo().findById(1), 10);
+			//this.agregar(rf.getArticuloRepo().findById(2), 20);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

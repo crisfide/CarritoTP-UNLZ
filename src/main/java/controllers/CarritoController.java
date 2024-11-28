@@ -38,6 +38,12 @@ public class CarritoController extends HttpServlet {
     
     //DO-GET
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		Usuario u = (Usuario) session.getAttribute("usuario");	
+		if( u ==null ) {
+			response.sendError(401,"No autorizado");
+			return;
+		}
 		
 		String accion = request.getParameter("accion");
 		accion = Optional.ofNullable(accion).orElse("index");
@@ -64,7 +70,6 @@ public class CarritoController extends HttpServlet {
 	}
 
 	private void getIndex(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		
 		List<ElementoCarrito> lista = this.carrito.getAll();
 		
