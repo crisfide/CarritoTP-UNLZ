@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,8 +18,11 @@ import com.oracle.wls.shaded.org.apache.regexp.recompile;
 
 import decorators.SessionDecorator;
 import exeptions.ArticuloDeslogueadoException;
+import exeptions.PresupuestoExcedidoException;
 import factory.RepoFactory;
 import modelos.Articulo;
+import modelos.Proyecto;
+import modelos.ProyectoDetalle;
 import repositories.interfaces.ArticuloRepo;
 import repositories.interfaces.UsuarioRepo;
 import utils.ProyectoBuilder;
@@ -93,18 +97,46 @@ public class CreacionProyectoController extends HttpServlet {
 				switch (accion) {
 					case "modifpre"-> postModificarPresupuesto(request,response);
 					case "agegarart"-> postAgregarArticulo(request,response);
-					
+					case "finalizar"-> postFinalizar(request,response);
 					
 					default -> response.sendError(404);
 				}	
 	
 			}catch (ArticuloDeslogueadoException e) {
 				response.sendRedirect("auth");
+			} catch (PresupuestoExcedidoException e) {
+				response.sendError(400,e.getMessage());
 			}
 			
 		
 
 	}
+
+	private void postFinalizar(HttpServletRequest request, HttpServletResponse response) throws ArticuloDeslogueadoException, PresupuestoExcedidoException, IOException  {
+		
+		SessionDecorator sDec = new SessionDecorator(request.getSession());
+		
+		Articulo lider = sDec.getArticuloLogueadoActu(articulosRepo);
+		
+		ProyectoBuilder proBuilder = sDec.getProyecto();
+		
+		Proyecto pro = proBuilder.toProyecto(articulosRepo, lider.getCodigo());
+		
+		sDec.removeProyecyo();
+		
+		
+		var w = response.getWriter();
+		
+		w.append(pro.toString()).append("\n");
+		for (ProyectoDetalle detalle : pro.getDetalle()) {
+			w.append(detalle.toString()).append("\n");
+			
+		}
+		
+		//Guardar bdd
+		
+	}
+
 
 	private void postAgregarArticulo(HttpServletRequest request, HttpServletResponse response) throws IOException  {
 

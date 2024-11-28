@@ -78,13 +78,35 @@
 	
 	
 	<h3>Cambiar presupuesto</h3>
-	<form action="Crear" method="post" name="accion">
-			<input type="hidden" value="modifpre">
+	<form action="Crear" method="post">
+			<input type="hidden" value="modifpre" name="accion">
 			<input name="importe" />
+			<input type="submit">
+		</form>
+		
+		
+		
+		<h3>Finalizar</h3>
+		
+		
+		<form action="Crear" method="post">
+			<input type="hidden" value="finalizar">
+			<input name="accion" />
 			<input type="submit">
 		</form>
 	
 	
+	
+		<!--BOTON-->
+		<!--
+		<form action="Crear" method="post">
+    		<input type="hidden" name="accion" value="finalizar">
+    		<button type="submit">Finalizar</button>
+		</form>
+		-->
+
+
+
 
 
 </body>

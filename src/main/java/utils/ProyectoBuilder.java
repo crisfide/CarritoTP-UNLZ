@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import exeptions.PresupuestoExcedidoException;
 import modelos.Articulo;
+import modelos.Proyecto;
+import modelos.ProyectoDetalle;
+import repositories.interfaces.ArticuloRepo;
 
 public class ProyectoBuilder {
 	
@@ -89,6 +93,35 @@ public class ProyectoBuilder {
 	}
 	
 	
+	
+	public Proyecto toProyecto(ArticuloRepo aRepo,  int liderCodigo) throws PresupuestoExcedidoException {
+		
+		
+		
+		Proyecto proyecto= new Proyecto(liderCodigo, this.presupuesto, this.getTotal());
+				
+		for (Tupla tupla : tuplas) {
+			
+			
+			Articulo arti = aRepo.findById(tupla.getArticulo().getCodigo());
+			
+			tupla.setArticulo(arti);
+			
+			proyecto.addDetalle(arti.getCodigo(), tupla.tarea, arti.getPrecio());
+			
+			
+			
+		}
+		
+		
+		if( this.presupuesto < this.getTotal()) {
+			throw new PresupuestoExcedidoException("Se ha superado el presupuesto");
+			
+		}
+		
+		
+		return proyecto;
+	}
 	
 	
 

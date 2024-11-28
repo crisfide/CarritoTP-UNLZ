@@ -84,6 +84,13 @@ public class SessionDecorator {
 		session.setAttribute(ARTICULO, articulo);
 		
 	}
+
+	public void removeProyecyo() {
+
+
+		session.removeAttribute(ARTICULO);
+		
+	}
 	
 	
 	
