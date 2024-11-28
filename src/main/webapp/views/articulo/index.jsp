@@ -68,8 +68,10 @@
 				<c:if test="${sessionScope.usuario.rol eq 'Empleado'}">
 					<td><a href="articulo?accion=edit&codigo=${articulo.codigo}">editar</a></td>
 				</c:if>
+				
+				<!-- boton para agregar al carrito -->
 				<c:if test="${sessionScope.usuario.rol eq 'Cliente'}">
-					<td><a href="carrito?accion=edit&codigo=${articulo.codigo}">Agregar al carrito</a></td>
+					<td><a href="carrito?accion=agregar&codigo=${articulo.codigo}">Agregar al carrito</a></td>
 				</c:if>
 			 		
 				</tr>				

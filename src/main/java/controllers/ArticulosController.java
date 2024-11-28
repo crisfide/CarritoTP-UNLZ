@@ -207,12 +207,10 @@ public class ArticulosController extends HttpServlet {
 		this.articulosRepo.insert(articulo);
 		
 		
-		//response.sendRedirect("articulo");
+		response.sendRedirect("articulo");
 		
-		request.setAttribute("articulo", articulo);
-		
-		
-		request.getRequestDispatcher("/view/articulo/creado.jsp").forward(request, response);
+		//request.setAttribute("articulo", articulo);		
+		//request.getRequestDispatcher("/view/articulo/creado.jsp").forward(request, response);
 		
 	}
 

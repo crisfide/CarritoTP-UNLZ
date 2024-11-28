@@ -50,7 +50,8 @@
 		 		
 		 		<td><a href="articulo?accion=show&codigo=${elemento.articulo.codigo}">ver</a></td>
 
-				<td><a href="carrito?accion=edit&codigo=${elemento.articulo.codigo}">Agregar/quitar del carrito</a></td>
+				<td><a href="carrito?accion=agregar&codigo=${elemento.articulo.codigo}">Agregar al carrito</a></td>
+				<td><a href="carrito?accion=quitar&codigo=${elemento.articulo.codigo}">Quitar del carrito</a></td>
 				<td><a href="carrito?accion=edit&codigo=${elemento.articulo.codigo}">Eliminar del carrito</a></td>
 			 		
 				</tr>				

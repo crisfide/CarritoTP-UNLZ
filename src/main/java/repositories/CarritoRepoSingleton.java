@@ -72,7 +72,7 @@ public class CarritoRepoSingleton implements CarritoRepo {
 		if (optionalExistente.isPresent()) {
 		    ElementoCarrito existente = optionalExistente.get();
 
-		    if (existente.getCantidad() == 1) {
+		    if (existente.getCantidad() == cantidad) {
 		        this.lista.remove(existente);
 		    } else if (existente.getCantidad() > cantidad) {
 		        existente.setCantidad(existente.getCantidad() - cantidad);

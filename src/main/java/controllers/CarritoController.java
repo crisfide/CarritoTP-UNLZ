@@ -28,11 +28,13 @@ public class CarritoController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private CarritoRepo carrito;
+	private ArticuloRepo articulosRepo;
        
     public CarritoController() {       
     	   
        RepoFactory factory = new RepoFactory();
        this.carrito = factory.getCarrito();
+       this.articulosRepo = factory.getArticuloRepo();
     }
     
     
@@ -51,15 +53,35 @@ public class CarritoController extends HttpServlet {
 		switch (accion) {
 			case "index" -> getIndex(request,response);
 			case "show" -> getShow(request,response);
-			case "edit" -> getEdit(request,response); //cambiar la cantidad en el carrito
+			case "agregar" -> getAgregar(request,response); //cambiar la cantidad en el carrito
+			case "quitar" -> getQuitar(request,response); //cambiar la cantidad en el carrito
 			case "confirm" -> getConfirm(request,response); //confirmar la compra
 
 			default -> response.sendError(404);
 		}
 	}
 
-	private void getEdit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			
+	private void getAgregar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String sCodigo = request.getParameter("codigo");
+		int codigo = Integer.parseInt(sCodigo);		
+		
+		Articulo art = this.articulosRepo.findById(codigo);
+
+		request.setAttribute("articulo",art);
+		
+		request.getRequestDispatcher("/views/carrito/agregar.jsp").forward(request, response);
+		
+	}
+	private void getQuitar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String sCodigo = request.getParameter("codigo");
+		int codigo = Integer.parseInt(sCodigo);		
+		
+		Articulo art = this.articulosRepo.findById(codigo);
+
+		request.setAttribute("articulo",art);
+		
+		request.getRequestDispatcher("/views/carrito/quitar.jsp").forward(request, response);
+		
 	}
 	private void getConfirm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			
@@ -102,8 +124,8 @@ public class CarritoController extends HttpServlet {
 		}
 		
 		switch (accion) {
-		case "edit" -> postEdit(request,response); //cambiar la cantidad en el carrito
-		case "delete" -> postDelete(request,response); //eliminar del carrito
+		case "agregar" -> postAgregar(request,response); //cambiar la cantidad en el carrito
+		case "quitar" -> postQuitar(request,response); //cambiar la cantidad en el carrito
 		case "confirm" -> postConfirm(request,response); //confirmar la compra
 		default -> response.sendError(404,"No existe la accion: "+ accion);
 			
@@ -114,15 +136,47 @@ public class CarritoController extends HttpServlet {
 		
 	}
 	
-	private void postEdit(HttpServletRequest request, HttpServletResponse response)  throws IOException {
-	}
-	private void postDelete(HttpServletRequest request, HttpServletResponse response)  throws IOException {
-
-		response.sendRedirect("carrito");
+	private void postAgregar(HttpServletRequest request, HttpServletResponse response)  throws IOException {
+		String sCodigo = request.getParameter("codigo");
+		int codigo = Integer.parseInt(sCodigo);
 		
+		String sCantidad = request.getParameter("cantidad");
+		int cantidad = Integer.parseInt(sCantidad);
+		
+		Articulo art = articulosRepo.findById(codigo);
+		try {
+			this.carrito.agregar(art, cantidad);
+		} catch (Exception e) {
+			response.sendError(404,e.getMessage());
+			return;
+		}
+		
+		
+		response.sendRedirect("carrito");
+	
+	}	
+	private void postQuitar(HttpServletRequest request, HttpServletResponse response)  throws IOException {
+		String sCodigo = request.getParameter("codigo");
+		int codigo = Integer.parseInt(sCodigo);
+		
+		String sCantidad = request.getParameter("cantidad");
+		int cantidad = Integer.parseInt(sCantidad);
+		
+		Articulo art = articulosRepo.findById(codigo);
+		try {
+			this.carrito.quitar(art, cantidad);
+		} catch (Exception e) {
+			response.sendError(404,e.getMessage());
+			return;
+		}
+		
+		
+		response.sendRedirect("carrito");
+	
 	}
 	
 	private void postConfirm(HttpServletRequest request, HttpServletResponse response)  throws IOException {
+	
 	}
 
 
