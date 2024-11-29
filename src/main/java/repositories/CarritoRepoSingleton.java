@@ -85,6 +85,14 @@ public class CarritoRepoSingleton implements CarritoRepo {
 
 	}
 	
+    // Método para calcular el total
+    public double getTotal() {
+        return this.getAll().stream()
+                .mapToDouble(e -> e.getCantidad() * e.getArticulo().getPrecio())
+                .sum();
+    }
+	
+	
 	
 
 

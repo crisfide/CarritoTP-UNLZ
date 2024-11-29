@@ -77,6 +77,9 @@
         tr:nth-child(even) {
             background-color: #f9f9f9;
         }
+        tr:hover{
+            background-color: #f0f0f0;        	
+        }
 
         a.table-action {
             text-decoration: none;

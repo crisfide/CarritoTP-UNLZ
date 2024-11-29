@@ -10,4 +10,6 @@ public interface CarritoRepo {
 
 	public void agregar(Articulo art, int cantidad) throws Exception;
 	public void quitar(Articulo art, int cantidad) throws Exception;
+    public double getTotal();
+
 }

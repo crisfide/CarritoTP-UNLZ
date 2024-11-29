@@ -84,7 +84,15 @@ public class CarritoController extends HttpServlet {
 		
 	}
 	private void getConfirm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			
+		//puede llegar a servir
+		List<ElementoCarrito> lista = this.carrito.getAll();		
+		request.setAttribute("listaCarrito", lista);	
+		
+		double total = this.carrito.getTotal();		
+		request.setAttribute("total", total);	
+		
+		request.getRequestDispatcher("/views/carrito/confirm.jsp").forward(request, response);
+
 	}
 
 	private void getShow(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

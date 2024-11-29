@@ -4,7 +4,7 @@
 <html lang="es">
 <head>
     <meta charset="ISO-8859-1">
-    <title>Detalles del Artículo</title>
+    <title>Confirmar compra</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -66,21 +66,17 @@
 </head>
 <body>
     <div class="container">
-        <h1>Detalles del Artículo</h1>
+        <h1>Confirmar compra</h1>
         
-        <!-- Mostrar la descripción y precio del artículo -->
+        <!-- Mostrar el total a pagar  -->
         <div class="article-details">
-            <p><span>Descripción:</span> <c:out value="${articulo.descripcion}" /></p>
-            <p><span>Precio:</span> $<c:out value="${articulo.precio}" /></p>
+            <p><span>Total a pagar:</span> $<c:out value="${total}" /></p>
         </div>
         
-        <!-- Formulario para eliminar el artículo -->
-        <form method="post" action="articulo">
-            <input type="hidden" name="accion" value="delete"> 
-            <input type="hidden" name="codigo" value="${articulo.codigo}">
-			<c:if test="${sessionScope.usuario.rol eq 'Empleado'}">
-			    <button type="submit" class="button">Eliminar Artículo</button>
-             </c:if>
+        <!-- Formulario para confirmar -->
+        <form method="post" action="carrito">
+            <input type="hidden" name="accion" value="confirm"> 
+			<button type="submit" class="button">Confirmar compra</button>
         </form>
     </div>
 </body>
