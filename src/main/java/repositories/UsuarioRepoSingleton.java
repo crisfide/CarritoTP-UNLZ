@@ -26,6 +26,9 @@ public class UsuarioRepoSingleton implements UsuarioRepo {
 			 
 		this.insert(new Usuario("Carlos", "1234","Empleado"));
         this.insert(new Usuario("Manuel", "1234","Cliente"));
+        this.insert(new Usuario("Gabi", "1234","Cliente"));
+        this.insert(new Usuario("Juank", "1234","Cliente"));
+        this.insert(new Usuario("Cris", "1234","Cliente"));
 	
 	}
 		

@@ -5,6 +5,8 @@ public class Usuario {
 	private String nombre, contraseña, rol;
 	
 	private int id;
+	
+	private double saldo;
 		
 	
 	
@@ -13,6 +15,7 @@ public class Usuario {
 		this.nombre = nombre;
 		this.contraseña = contraseña;
 		this.rol = rol;
+		this.saldo = 0;
 	}
 	
 
@@ -44,6 +47,16 @@ public class Usuario {
 	@Override
 	public String toString() {
 		return "Usuario [nombre=" + nombre + ", contraseña=" + contraseña + ", rol=" + rol + ", id=" + id + "]";
+	}
+
+
+	public double getSaldo() {
+		return saldo;
+	}
+
+
+	public void setSaldo(double saldo) {
+		this.saldo = saldo;
 	}
 	
 	

@@ -24,6 +24,8 @@
 	<h1>Hola <c:out value="${sessionScope.usuario.nombre}" default="Desconocido"></c:out></h1>
 	<h2>Carrito de compras</h2>
 	
+	<a href="saldo">Saldo</a> 
+	<h1>Saldo: $ <c:out value="${sessionScope.usuario.saldo}" ></c:out></h1>
 	<a href="articulo">Ver lista de articulos</a>
 	<br>
 

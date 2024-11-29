@@ -1,7 +1,6 @@
 /controllers/
+/repositories/
 /decorators/
 /exeptions/
-/utils/
-/factory/
 /modelos/
-/repositories/
+/utils/
