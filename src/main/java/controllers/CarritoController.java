@@ -156,6 +156,13 @@ public class CarritoController extends HttpServlet {
 		int cantidad = Integer.parseInt(sCantidad);
 		
 		Articulo art = articulosRepo.findById(codigo);
+		
+		if(art.getStock() < cantidad) {
+			
+			response.sendError(404,"No se puede agregar esa cantidad");
+			return;
+		}
+		
 		try {
 			this.carrito.agregar(art, cantidad);
 		} catch (Exception e) {
@@ -188,6 +195,8 @@ public class CarritoController extends HttpServlet {
 	}
 	
 	private void postConfirm(HttpServletRequest request, HttpServletResponse response)  throws IOException {
+		
+		
 		String sUsuarioId = request.getParameter("usuarioId");
 		int usuarioId = Integer.parseInt(sUsuarioId);
 		
@@ -198,12 +207,24 @@ public class CarritoController extends HttpServlet {
 		
 		registroRepo.insert(new Registro(usuarioId, lista, total));
 		
+		lista.stream()
+			.forEach(elemento -> {
+			    Articulo articulo = elemento.getArticulo();
+			    articulo.setStock(articulo.getStock() - elemento.getCantidad());	   
+			});
+		
+		HttpSession session = request.getSession();
+		Usuario u = (Usuario) session.getAttribute("usuario");
+		
+		u.setSaldo(u.getSaldo()-total);
+			
 		response.sendRedirect("registro");
 
-	}
+	
 
 
 
+}
 }
 
 

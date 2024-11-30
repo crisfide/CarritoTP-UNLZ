@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import decorators.SessionDecorator;
+
 import factory.RepoFactory;
 import modelos.Usuario;
 import repositories.interfaces.UsuarioRepo;
@@ -53,7 +53,7 @@ public class AuthController extends HttpServlet {
 			
 			HttpSession session = request.getSession();
 			
-			SessionDecorator sessionDe = new SessionDecorator(session);
+			
 			
 			//sessionDe.setArticuloLogueado(usu);
 			

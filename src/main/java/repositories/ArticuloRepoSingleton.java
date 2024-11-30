@@ -75,6 +75,17 @@ public class ArticuloRepoSingleton implements ArticuloRepo {
 		
 	}
 	
-	
+	public boolean disminuirStock(int cantidad, Articulo art) {
+        if (cantidad > art.getStock()) {
+            return false;
+        }   
+		   art.setStock(art.getStock()-cantidad) ;
+		   return true;
+}
+
+
 
 }
+	
+	
+
