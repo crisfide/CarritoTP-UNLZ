@@ -1,18 +1,14 @@
-
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-  
-  <!--  ESTO DESPUES SE TIENE QUE SACAR -->
     
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
      
-        
   
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="ISO-8859-1">
-    <title>Artículos</title>
+    <title>Registros</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -70,7 +66,7 @@
         }
 
         th {
-            background-color: #007bff;
+            background-color: #5bcc00;
             color: white;
         }
 
@@ -96,55 +92,40 @@
     <div class="container">
         
         <h1>Hola, <c:out value="${sessionScope.usuario.nombre}" default="Desconocido" /></h1>
+        <h1>Historial de ventas</h1>
 
         
         <div class="nav-links">
             
-            <c:if test="${sessionScope.usuario.rol eq 'Empleado'}">
-                <a href="articulo?accion=create">Agregar Artículo</a>
-            </c:if>
-            
-         
+  
             <c:if test="${sessionScope.usuario.rol eq 'Cliente'}">
                 <a href="carrito">Ver Carrito</a>
             </c:if>
+            <a href="articulo">Ver Articulos</a>
             
-      
-            <a href="registro">Ver historial de ventas</a>
         </div>
 
    
         <table>
             <thead>
                 <tr>
-                    <th>Código</th>
-                    <th>Descripción</th>
-                    <th>Precio</th>
-                    <th>Stock</th>
+                    <th>ID</th>
+                    <th>Usuario</th>
+                    <th>Total</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
             
-                <c:forEach var="articulo" items="${listin}">
+                <c:forEach var="registro" items="${lista}">
                     <tr>
-                        <td><c:out value="${articulo.codigo}" /></td>
-                        <td><c:out value="${articulo.descripcion}" /></td>
-                        <td>$<c:out value="${articulo.precio}" /></td>
-                        <td><c:out value="${articulo.stock}" /></td>
+                        <td><c:out value="${registro.id}" /></td>
+                        <td><c:out value="${registro.usuarioId}" /></td>
+                        <td>$<c:out value="${registro.total}" /></td>
                         <td>
                          
-                            <a class="table-action" href="articulo?accion=show&codigo=${articulo.codigo}">Ver</a>
+                            <a class="table-action" href="registro?accion=show&id=${registro.id}">Ver Detalle</a>
                             
-                        
-                            <c:if test="${sessionScope.usuario.rol eq 'Empleado'}">
-                                | <a class="table-action" href="articulo?accion=edit&codigo=${articulo.codigo}">Editar</a>
-                            </c:if>
-                            
-                            <!-- Solo clientes pueden agregar artículos al carrito -->
-                            <c:if test="${sessionScope.usuario.rol eq 'Cliente'}">
-                                | <a class="table-action" href="carrito?accion=agregar&codigo=${articulo.codigo}">Agregar al Carrito</a>
-                            </c:if>
                         </td>
                     </tr>
                 </c:forEach>

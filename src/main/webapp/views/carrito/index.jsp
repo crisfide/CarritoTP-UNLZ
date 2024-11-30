@@ -122,6 +122,8 @@
         <a href="saldo">Ver Saldo</a>
         <h1>Saldo Disponible: $ <c:out value="${sessionScope.usuario.saldo}"></c:out></h1>
         <a href="articulo">Ver Lista de Artículos</a>
+		<a href="registro">Ver historial de ventas</a>
+        
     </div>
 
     <c:choose>

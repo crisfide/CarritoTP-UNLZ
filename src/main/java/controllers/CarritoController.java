@@ -18,10 +18,12 @@ import com.oracle.wls.shaded.org.apache.regexp.RE;
 import factory.RepoFactory;
 import modelos.Articulo;
 import modelos.ElementoCarrito;
+import modelos.Registro;
 import modelos.Usuario;
 import repositories.ArticuloRepoSingleton;
 import repositories.interfaces.ArticuloRepo;
 import repositories.interfaces.CarritoRepo;
+import repositories.interfaces.RegistroRepo;
 
 @WebServlet("/carrito")
 public class CarritoController extends HttpServlet {
@@ -29,12 +31,14 @@ public class CarritoController extends HttpServlet {
 	
 	private CarritoRepo carrito;
 	private ArticuloRepo articulosRepo;
+	private RegistroRepo registroRepo;
        
     public CarritoController() {       
     	   
        RepoFactory factory = new RepoFactory();
        this.carrito = factory.getCarrito();
        this.articulosRepo = factory.getArticuloRepo();
+       this.registroRepo = factory.getRegistroRepo();
     }
     
     
@@ -184,7 +188,18 @@ public class CarritoController extends HttpServlet {
 	}
 	
 	private void postConfirm(HttpServletRequest request, HttpServletResponse response)  throws IOException {
-	
+		String sUsuarioId = request.getParameter("usuarioId");
+		int usuarioId = Integer.parseInt(sUsuarioId);
+		
+		String sTotal = request.getParameter("total");
+		double total = Double.parseDouble(sTotal);
+		
+		List<ElementoCarrito> lista = this.carrito.getAll();
+		
+		registroRepo.insert(new Registro(usuarioId, lista, total));
+		
+		response.sendRedirect("registro");
+
 	}
 
 

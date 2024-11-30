@@ -4,7 +4,7 @@
 <html lang="es">
 <head>
     <meta charset="ISO-8859-1">
-    <title>Confirmar compra</title>
+    <title>Detalles del Registro</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -66,20 +66,35 @@
 </head>
 <body>
     <div class="container">
-        <h1>Confirmar compra</h1>
+        <h1>Detalles del Registro</h1>
         
-        <!-- Mostrar el total a pagar  -->
         <div class="article-details">
-            <p><span>Total a pagar:</span> $<c:out value="${total}" /></p>
+            <p><span>ID:</span> <c:out value="${registro.id}" /></p>
+            <p><span>Usuario:</span> <c:out value="${registro.usuarioId}" /></p>
+            <p><span>Total:</span> $<c:out value="${registro.total}" /></p>
         </div>
         
-        <!-- Formulario para confirmar -->
-        <form method="post" action="carrito">
-            <input type="hidden" name="accion" value="confirm"> 
-            <input type="hidden" name="usuarioId" value="${sessionScope.usuario.id}"> 
-            <input type="hidden" name="total" value="${total}"> 
-			<button type="submit" class="button">Confirmar compra</button>
-        </form>
+        <table>
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach var="elemento" items="${registro.carrito}">
+                    <tr>
+                        <td><c:out value="${elemento.articulo.codigo}"/></td>
+                        <td><c:out value="${elemento.articulo.descripcion}"/></td>
+                        <td>$<c:out value="${elemento.articulo.precio}"/></td>
+                        <td><c:out value="${elemento.cantidad}"/></td>
+
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
     </div>
 </body>
 </html>
