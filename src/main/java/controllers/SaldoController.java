@@ -87,35 +87,30 @@ public class SaldoController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 
-				HttpSession session = request.getSession();
-				Usuario u = (Usuario) session.getAttribute("usuario");
-				
-		
-				if( u ==null ) {
-					response.sendError(401,"No autorizado");
-					return;
-				}
-				
-				String accion = request.getParameter("accion");
-				//accion = Optional.ofNullable(accion).orElse("insert");
-				
-				if(accion == null) {
-					response.sendError(400,"No se brindo una accion");
-					return;
-				}
-				
-				switch (accion) {
-				
+			HttpSession session = request.getSession();
+			Usuario u = (Usuario) session.getAttribute("usuario");
+			
+	
+			if( u ==null ) {
+				response.sendError(401,"No autorizado");
+				return;
+			}
+			
+			String accion = request.getParameter("accion");
+			//accion = Optional.ofNullable(accion).orElse("insert");
+			
+			if(accion == null) {
+				response.sendError(400,"No se brindo una accion");
+				return;
+			}
+			
+			switch (accion) {
+			
 				case "agregar" -> postAgregar(request,response); //confirmar la compra
 				case "transferir" -> postTransferir(request,response); //confirmar la compra
 				default -> response.sendError(404,"No existe la accion: "+ accion);
-			
+				
 		}
-		
-	
-		
-		
-		
 		
 	}
 
@@ -131,10 +126,15 @@ public class SaldoController extends HttpServlet {
 		HttpSession session = request.getSession();
 		Usuario u = (Usuario) session.getAttribute("usuario");
 		
+		if(cantidad > u.getSaldo()) {
+			response.sendError(400,"La transferencia excede el saldo disponible");
+			return;
+		}
+		
 		u.setSaldo(u.getSaldo()-cantidad);
 		
-		Usuario usuTrans = usuariosRepo.findById(id);
-		
+		//destinatario
+		Usuario usuTrans = usuariosRepo.findById(id);		
 		usuTrans.setSaldo(usuTrans.getSaldo()+cantidad);
 			
 		response.sendRedirect("carrito");

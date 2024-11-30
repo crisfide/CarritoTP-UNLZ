@@ -157,9 +157,8 @@ public class CarritoController extends HttpServlet {
 		
 		Articulo art = articulosRepo.findById(codigo);
 		
-		if(art.getStock() < cantidad) {
-			
-			response.sendError(404,"No se puede agregar esa cantidad");
+		if(art.getStock() < cantidad) {			
+			response.sendError(400,"La cantidad excede el stock disponible");
 			return;
 		}
 		
@@ -198,10 +197,19 @@ public class CarritoController extends HttpServlet {
 		
 		
 		String sUsuarioId = request.getParameter("usuarioId");
-		int usuarioId = Integer.parseInt(sUsuarioId);
+		int usuarioId = Integer.parseInt(sUsuarioId);		
 		
 		String sTotal = request.getParameter("total");
 		double total = Double.parseDouble(sTotal);
+		
+		HttpSession session = request.getSession();
+		Usuario u = (Usuario) session.getAttribute("usuario");
+		
+		if(total > u.getSaldo()) {
+			response.sendError(400,"La compra excede el saldo disponible");
+			return;
+		}
+		
 		
 		List<ElementoCarrito> lista = this.carrito.getAll();
 		
@@ -212,11 +220,11 @@ public class CarritoController extends HttpServlet {
 			    Articulo articulo = elemento.getArticulo();
 			    articulo.setStock(articulo.getStock() - elemento.getCantidad());	   
 			});
-		
-		HttpSession session = request.getSession();
-		Usuario u = (Usuario) session.getAttribute("usuario");
-		
+				
 		u.setSaldo(u.getSaldo()-total);
+		
+		//vaciar el carrito para evitar errores de stock
+		this.carrito.removeAll();
 			
 		response.sendRedirect("registro");
 

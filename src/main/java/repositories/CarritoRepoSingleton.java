@@ -91,6 +91,11 @@ public class CarritoRepoSingleton implements CarritoRepo {
                 .mapToDouble(e -> e.getCantidad() * e.getArticulo().getPrecio())
                 .sum();
     }
+
+	@Override
+	public void removeAll() {
+		this.lista.clear();		
+	}
 	
 	
 	

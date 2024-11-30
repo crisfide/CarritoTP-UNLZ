@@ -90,6 +90,21 @@
             font-style: italic;
             margin: 20px 0;
         }
+        
+        @media print{
+            html,body, body * {		        
+        		background-color: white;
+        		color: black;
+        		border:0px;
+        		padding:5px;
+        		margin:5px;
+        		width: fit-content;
+		      /*visibility: hidden;*/
+		    }
+        	button, a{
+		      visibility: hidden;
+        	}
+        }
     </style>
 </head>
 <body>
@@ -129,6 +144,12 @@
                 <p class="empty-message">No hay artículos en este registro.</p>
             </c:otherwise>
         </c:choose>
+        <a href="#" class="button print-button" onclick="window.print()">
+			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer text-white" viewBox="0 0 16 16">
+				<path d="M2 5a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v3a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-3h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H2Zm11-3a1 1 0 0 1 1 1v3H2V3a1 1 0 0 1 1-1h10ZM4 12h8v3H4v-3Zm0-8V3h8v1H4Zm0 5v-2h8v2H4Zm6 2h2v2h-2v-2Z"/>
+			</svg>
+        	Imprimir Factura
+        </a>
 
         <a href="registro" class="button">Volver a la Lista</a>
     </div>
